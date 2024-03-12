@@ -29,5 +29,12 @@ public class PlayerAnimator : MonoBehaviour
         animator.SetFloat("velocityX", Mathf.Abs(rb.velocity.x));
         animator.SetFloat("velocityY", rb.velocity.y);
         animator.SetBool("isGroud", physicsCheck.isGroud);
+        animator.SetBool("isDead", playerControl.isDead);
+    }
+
+    // ‹…À
+    public void PlayHurt()
+    {
+        animator.SetTrigger("hurt");
     }
 }

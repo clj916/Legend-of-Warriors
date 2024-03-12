@@ -15,6 +15,11 @@ public class PlayerControl : MonoBehaviour
     //移动速度
     public float speed;
 
+    [Header("受伤")]
+    public bool isHurt;
+    public int hurtForce;
+    public bool isDead;
+
     private void Awake()
     {
         inputControl = new PlayerInputControl();
@@ -44,7 +49,8 @@ public class PlayerControl : MonoBehaviour
 
     private void FixedUpdate()
     {
-        Move();
+        if(!isHurt)
+            Move();
 
     }
 
@@ -65,5 +71,20 @@ public class PlayerControl : MonoBehaviour
     {
         if(physicsCheck.isGroud)
         rb.AddForce(jumpForce * Vector2.up, ForceMode2D.Impulse);
+    }
+
+    public void GetHurt(Transform attackTran)
+    {
+        isHurt = true;
+        rb.velocity = Vector2.zero;
+        Vector2 dir = new Vector2((transform.position.x - attackTran.position.x), 0).normalized;
+
+        rb.AddForce(dir * hurtForce,ForceMode2D.Impulse);
+    }
+
+    public void PlayerDead()
+    {
+        isDead = true;
+        inputControl.GamePlay.Disable();
     }
 }
